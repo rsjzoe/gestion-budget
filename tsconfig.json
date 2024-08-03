@@ -1,0 +1,17 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts"
+, "app/_layout.jsx", "constants copy/Colors.js", "lib/hooks/useColorScheme.js", "lib/hooks/useColorScheme.web.js", "lib/hooks/useThemeColor.js", "lib/page-name.js", "components/load-font/load-font.jsx", "components/custom/themed.jsx", "components/custom/touchable-opacity.jsx", "constants/Colors.js", "app/index.jsx"  ]
+}

@@ -7,35 +7,34 @@ import Cart from "@/components/icons/cart";
 import Bonus from "@/components/icons/bonus";
 import Animal from "@/components/icons/animal";
 import Transport from "@/components/icons/transport";
-import Check from "@/components/icons/check";
+import {FormAdd} from '@/app/ajouter/components/formAdd'
 import { useState } from "react";
-import { Input } from "@/components/input/input";
-import { Button } from "@/components/button/button";
 
 const depenses = [
   {
     Icon: Cart,
-    label: "Achats",
+    category: "Achats",
   },
   {
     Icon: Animal,
-    label: "Animal",
+    category: "Animal",
   },
   {
     Icon: Transport,
-    label: "Transport",
+    category: "Transport",
   },
 ];
 const revenus = [
   {
     Icon: Bonus,
-    label: "Bonus",
+    category: "Bonus",
   },
 ];
 export function Ajouter({ onClose }) {
   const [isDepense, setDepense] = useState(true);
   const [showInput, setShowInput] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null);
+  const [category, setCategory] = useState(null)
   const data = isDepense ? depenses : revenus;
 
   return (
@@ -89,6 +88,7 @@ export function Ajouter({ onClose }) {
             onPress={() => {
               setSelectedIndex(i);
               setShowInput(true);
+              setCategory(item.category)
             }}
           >
             <View
@@ -102,28 +102,11 @@ export function Ajouter({ onClose }) {
             >
               <item.Icon color={"#5b5a5b"} />
             </View>
-            <Text>{item.label}</Text>
+            <Text>{item.category}</Text>
           </TouchableOpacity>
         ))}
       </View>
-      {showInput ? (
-        <View style={styles.formAdd}>
-          <Input
-            keyboardType="decimal-pad"
-            placeholder="entrer montant..."
-            style={{ borderWidth: 0, padding: 10 }}
-          />
-          <View style={styles.inputSubmit}>
-            <Input
-              placeholder="Note : saisie une note..."
-              style={{ borderWidth: 0, flex: 1, padding: 10 }}
-            />
-            <Button style={styles.button}>
-              <Check />
-            </Button>
-          </View>
-        </View>
-      ) : null}
+      {showInput ? <FormAdd onClose={onClose} category={category}/> : null}
     </>
   );
 }
@@ -184,22 +167,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#e4e5e4",
     padding: 7,
     borderRadius: 9999,
-  },
-  formAdd: {
-    backgroundColor: "#e4e5e4",
-    padding: 9,
-    bottom: 0,
-    position: "absolute",
-    width: "100%",
-    gap: 9,
-    // display:"none",
-  },
-  inputSubmit: {
-    flexDirection: "row",
-    gap: 7,
-  },
-  button: {
-    backgroundColor: COLORS.primary,
-    borderRadius: 5,
   },
 });

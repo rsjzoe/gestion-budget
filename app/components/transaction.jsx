@@ -4,6 +4,7 @@ import { Text, View } from "@/components/custom/themed";
 import Transport from "@/components/icons/transport";
 import Animal from "@/components/icons/animal";
 import Bonus from "@/components/icons/bonus";
+import Cart from "@/components/icons/cart";
 
 //category = transport na achat de mretourne anle icon izi
 //type => revenus ou depenses
@@ -19,12 +20,19 @@ export function Transaction({ label, montant, category, type }) {
               <Transport />
             </View>
           )}
+          {category == "Achats" && (
+            <View
+              style={[styles.icon, { backgroundColor: COLORS.iconTransport }]}
+            >
+              <Cart />
+            </View>
+          )}
           {category == "Animal" && (
             <View style={[styles.icon, { backgroundColor: COLORS.iconAnimal }]}>
               <Animal />
             </View>
           )}
-           {category == "Bonus" && (
+          {category == "Bonus" && (
             <View style={[styles.icon, { backgroundColor: COLORS.iconBonus }]}>
               <Bonus />
             </View>
@@ -58,7 +66,7 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 9999,
   },
-  label:{
-    fontSize:15,
-  }
+  label: {
+    fontSize: 15,
+  },
 });

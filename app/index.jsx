@@ -2,10 +2,29 @@ import { Text, View } from "@/components/custom/themed";
 import Search from "@/components/icons/search";
 import Calendar from "@/components/icons/calendar";
 import { StyleSheet } from "react-native";
-import {Transaction} from "@/app/components/transaction"
+import { Transaction } from "@/app/components/transaction";
 import { COLORS } from "@/constants/Colors";
+import { useEffect, useState } from "react";
+import { db } from "@/drizzle/drizzle";
+import { Depenses } from "@/lib/depenses";
 
 export default function Index() {
+  const [depenses, setDepenses] = useState([]);
+
+  useEffect(() => {
+    async function get() {
+      // await Depenses.insert({
+      //   category: "Bus",
+      //   montant: 1000,
+      //   label: "bus",
+      // });
+
+      const data = await Depenses.findMany();
+      setDepenses(data);
+      console.log(data);
+    }
+    get();
+  }, []);
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -38,9 +57,21 @@ export default function Index() {
           </View>
         </View>
         <View style={styles.transactionContainer}>
-          <Transaction label={"Bus"} montant={"10 000"} category={"Transport"} type={"Depense"}/>
-          <Transaction label={"chien"} montant={"20 000"} category={"Animal"} type={"Depense"}/>
-          <Transaction label={"Bonus"} montant={"1 000 000"} category={"Bonus"} type={"Revenus"}/>
+          {depenses.map((item, i) => (
+            <Transaction
+              key={i}
+              label={item.label}
+              montant={item.montant}
+              category={item.category}
+              type={"Depense"}
+            />
+          ))}
+          <Transaction
+            label={"Bonus"}
+            montant={"1 000 000"}
+            category={"Bonus"}
+            type={"Revenus"}
+          />
         </View>
       </View>
     </View>
@@ -82,7 +113,7 @@ const styles = StyleSheet.create({
   transactionDay: {
     flexDirection: "row",
     paddingHorizontal: 15,
-    paddingVertical:9,
+    paddingVertical: 9,
     justifyContent: "space-between",
     borderBottomColor: "#c9c9c5",
     borderBottomWidth: 0.18,
@@ -97,6 +128,6 @@ const styles = StyleSheet.create({
   },
   transactionContainer: {
     padding: 15,
-    gap:15
+    gap: 15,
   },
 });

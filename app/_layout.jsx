@@ -13,9 +13,13 @@ import { TouchableOpacity } from "@/components/custom/touchable-opacity";
 import Plus from "@/components/icons/plus";
 import { Tab } from "@/app/components/tab";
 import { useEffect, useRef, useState } from "react";
-import {Ajouter} from "@/app/ajouter/ajouter"
+import { Ajouter } from "@/app/ajouter/ajouter";
+import { db } from "@/drizzle/drizzle";
+import migrations from "@/drizzle/migrations";
+import { useMigrations } from "drizzle-orm/expo-sqlite/migrator";
 
 export default function Layout() {
+  const { success, error } = useMigrations(db, migrations);
   const colorScheme = useColorScheme();
   const valueTheme = colorScheme === "dark" ? DarkTheme : DefaultTheme;
   const activePage = usePathname();
@@ -29,6 +33,20 @@ export default function Layout() {
       useNativeDriver: false,
     }).start();
   }, [openModal]);
+   
+  if (error)
+    return (
+      <View>
+        <Text>Migration error: {error.message}</Text>
+      </View>
+    );
+
+  if (!success)
+    return (
+      <View>
+        <Text>Migration is in progress...</Text>
+      </View>
+    );
 
   return (
     <LoadFont>
@@ -37,7 +55,7 @@ export default function Layout() {
         <View style={styles.contianer}>
           <Slot />
           <View style={styles.round}>
-            <Plus/>
+            <Plus />
           </View>
           <View style={styles.tabBar}>
             <Tab name={"Accueil"} href={"/"} pageActive={activePage} />
@@ -60,7 +78,11 @@ export default function Layout() {
             <Tab name={"Moi"} href={"/user"} pageActive={activePage} />
           </View>
           <Animated.View style={[styles.addContainer, { top: topAnim }]}>
-            <Ajouter onClose={()=>{setOpenModal(false)}}/>
+            <Ajouter
+              onClose={() => {
+                setOpenModal(false);
+              }}
+            />
           </Animated.View>
         </View>
       </ThemeProvider>

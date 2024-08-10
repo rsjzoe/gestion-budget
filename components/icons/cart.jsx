@@ -10,8 +10,6 @@ const Cart = (props) => (
     color={"#000"}
     {...props}
   >
-    <G clipPath="url(#a)">
-      <Path fill="currentColor" d="M0 0h24v24H0z" />
       <Path
         stroke="currentColor"
         strokeLinejoin="round"
@@ -25,7 +23,6 @@ const Cart = (props) => (
       />
       <Circle cx={10} cy={20} r={1} stroke="currentColor" strokeLinejoin="round" />
       <Circle cx={17.5} cy={20} r={1} stroke="currentColor" strokeLinejoin="round" />
-    </G>
     <Defs>
       <ClipPath id="a">
         <Path fill="currentColor" d="M0 0h24v24H0z" />

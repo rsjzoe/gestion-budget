@@ -81,7 +81,8 @@ const styles = StyleSheet.create({
   },
   transactionDay: {
     flexDirection: "row",
-    padding: 15,
+    paddingHorizontal: 15,
+    paddingVertical:9,
     justifyContent: "space-between",
     borderBottomColor: "#c9c9c5",
     borderBottomWidth: 0.18,

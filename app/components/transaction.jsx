@@ -29,7 +29,7 @@ export function Transaction({ label, montant, category, type }) {
               <Bonus />
             </View>
           )}
-          <Text>{label}</Text>
+          <Text style={styles.label}>{label}</Text>
         </View>
         <Text>
           {type == "Depense" ? "-" : ""}
@@ -58,4 +58,7 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 9999,
   },
+  label:{
+    fontSize:15,
+  }
 });

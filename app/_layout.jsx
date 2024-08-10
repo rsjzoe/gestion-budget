@@ -13,7 +13,7 @@ import { TouchableOpacity } from "@/components/custom/touchable-opacity";
 import Plus from "@/components/icons/plus";
 import { Tab } from "@/app/components/tab";
 import { useEffect, useRef, useState } from "react";
-import Calendar from "@/components/icons/calendar";
+import {Ajouter} from "@/app/ajouter/ajouter"
 
 export default function Layout() {
   const colorScheme = useColorScheme();
@@ -36,6 +36,9 @@ export default function Layout() {
         <StatusBar backgroundColor={COLORS.primary} style="dark" />
         <View style={styles.contianer}>
           <Slot />
+          <View style={styles.round}>
+            <Plus/>
+          </View>
           <View style={styles.tabBar}>
             <Tab name={"Accueil"} href={"/"} pageActive={activePage} />
             <Tab name={"Graphique"} href={"/graphic"} pageActive={activePage} />
@@ -48,23 +51,16 @@ export default function Layout() {
               <View style={styles.plus}>
                 <Plus />
               </View>
+
+              <View style={styles.roundWhite}>
+                <Plus />
+              </View>
             </TouchableOpacity>
             <Tab name={"Rapports"} href={"/rapport"} pageActive={activePage} />
             <Tab name={"Moi"} href={"/user"} pageActive={activePage} />
           </View>
           <Animated.View style={[styles.addContainer, { top: topAnim }]}>
-            <View style={styles.modalHeader}>
-              <TouchableOpacity
-                onPress={() => {
-                  setOpenModal(false);
-                }}
-              >
-                <Text style={styles.annuler}>Annuler</Text>
-              </TouchableOpacity>
-              <Text style={styles.ajouter}>Ajouter</Text>
-              <Calendar />
-              {/* <View></View> */}
-            </View>
+            <Ajouter onClose={()=>{setOpenModal(false)}}/>
           </Animated.View>
         </View>
       </ThemeProvider>
@@ -104,11 +100,29 @@ const styles = StyleSheet.create({
     padding: 11,
     position: "absolute",
     top: -20,
+  },
+  round: {
+    borderRadius: 9999,
+    backgroundColor: "#fff",
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 8,
-    elevation: 2.5,
+    elevation: 5,
+    padding: 16,
+    position: "absolute",
+    zIndex: -9999,
+    bottom: 13,
+    left: "42%",
+  },
+  roundWhite: {
+    borderRadius: 9999,
+    backgroundColor: "#fff",
+    padding: 16,
+    position: "absolute",
+    zIndex: -9999,
+    bottom: 1,
+    left: "8.5%",
   },
   addContainer: {
     position: "absolute",
@@ -116,20 +130,4 @@ const styles = StyleSheet.create({
     height: "100%",
     backgroundColor: "#fff",
   },
-  modalHeader: {
-    backgroundColor: COLORS.primary,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    padding: 15,
-    alignItems: "center",
-  },
-  annuler:{
-    fontSize:18,
-  },
-  ajouter:{
-    fontSize:20,
-    fontWeight:"800",
-    position:"relative",
-    left:-20
-  }
 });
